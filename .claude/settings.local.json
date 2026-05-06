@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --input-type=module --experimental-vm-modules)",
+      "Bash(npx tsx *)",
+      "Bash(echo \"FAILED with code $?\")",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}

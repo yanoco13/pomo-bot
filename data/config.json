@@ -1,0 +1,24 @@
+{
+  "386488646452248588": {
+    "workMinutes": 1,
+    "breakMinutes": 1,
+    "speakerId": 1,
+    "workStartPhrase": "きゆぶちゅ",
+    "breakStartPhrase": "ぐっぱい",
+    "reminderInterval": 2,
+    "reminderPhrase": "水のも、うまいよ",
+    "workEndPhrase": "作業時間が終わリンゴ。{break}分間休憩するんんご。",
+    "breakEndPhrase": "休憩が終わり"
+  },
+  "1204282356345733221": {
+    "workMinutes": 40,
+    "breakMinutes": 10,
+    "speakerId": 8,
+    "workStartPhrase": "やあ、お前の推しだよ。作業開始だ｡{work}分間一緒に頑張ろう",
+    "breakStartPhrase": "やあ、お前の推しだよ。休憩開始だ。{break}分間ゆっくり寝よう",
+    "reminderInterval": 25,
+    "reminderPhrase": "やあ、お前の推しだよ。あと{remaining}分で作業終わるよ。水飲んで。",
+    "workEndPhrase": "お前の推しだよ。作業時間終わり。{break}分間休憩しよう。",
+    "breakEndPhrase": "お前の推しだよ。休憩時間終わり。一緒に作業しよう。"
+  }
+}
