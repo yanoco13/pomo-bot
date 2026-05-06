@@ -45,8 +45,6 @@ export async function playTts(
   const channel = guild.channels.cache.get(voiceChannelId);
   if (!channel || !channel.isVoiceBased()) return;
 
-  const audioBuffer = await generateVoicevoxAudio(text, speakerId);
-
   const existing = getVoiceConnection(guildId);
   const connection = existing ?? joinVoiceChannel({
     channelId: voiceChannelId,
@@ -56,6 +54,8 @@ export async function playTts(
 
   try {
     await entersState(connection, VoiceConnectionStatus.Ready, 5_000);
+
+    const audioBuffer = await generateVoicevoxAudio(text, speakerId);
 
     const player = createAudioPlayer();
     const resource = createAudioResource(Readable.from(audioBuffer));
