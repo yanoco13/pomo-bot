@@ -99,7 +99,7 @@ async function schedulePhase(vcId: string, durationMs: number): Promise<void> {
   await session.textChannel.messages
     .fetch(session.messageId)
     .then((msg) => msg.edit({ embeds: [buildEmbed(session)] }))
-    .catch(() => {});
+    .catch((e) => console.error('[TTS]', e));
 
   if (!sessions.has(vcId)) return;
 
@@ -110,7 +110,7 @@ async function schedulePhase(vcId: string, durationMs: number): Promise<void> {
     await s.textChannel.messages
       .fetch(s.messageId)
       .then((msg) => msg.edit({ embeds: [buildEmbed(s)] }))
-      .catch(() => {});
+      .catch((e) => console.error('[TTS]', e));
   }, 60 * 1000);
 
   if (session.reminderTimer) clearInterval(session.reminderTimer);
@@ -121,7 +121,7 @@ async function schedulePhase(vcId: string, durationMs: number): Promise<void> {
       if (!s || s.phase !== 'work' || s.paused) return;
       const remaining = Math.max(1, Math.ceil((s.endsAt.getTime() - Date.now()) / 60000));
       const phrase = s.reminderPhrase.replace('{remaining}', String(remaining));
-      await playTts(phrase, s.speakerId, s.guildId, s.voiceChannelId).catch(() => {});
+      await playTts(phrase, s.speakerId, s.guildId, s.voiceChannelId).catch((e) => console.error('[TTS]', e));
     }, session.reminderInterval * 60 * 1000);
   }
 
@@ -140,7 +140,7 @@ async function schedulePhase(vcId: string, durationMs: number): Promise<void> {
       s.startedAt = new Date();
       s.endsAt = new Date(Date.now() + breakMs);
       const phrase = s.breakStartPhrase.replace('{break}', String(s.breakMinutes));
-      await playTts(phrase, s.speakerId, s.guildId, s.voiceChannelId).catch(() => {});
+      await playTts(phrase, s.speakerId, s.guildId, s.voiceChannelId).catch((e) => console.error('[TTS]', e));
       await schedulePhase(vcId, breakMs);
     } else {
       s.phase = 'work';
@@ -149,7 +149,7 @@ async function schedulePhase(vcId: string, durationMs: number): Promise<void> {
       s.startedAt = new Date();
       s.endsAt = new Date(Date.now() + workMs);
       const phrase = s.workStartPhrase.replace('{work}', String(s.workMinutes));
-      await playTts(phrase, s.speakerId, s.guildId, s.voiceChannelId).catch(() => {});
+      await playTts(phrase, s.speakerId, s.guildId, s.voiceChannelId).catch((e) => console.error('[TTS]', e));
       await schedulePhase(vcId, workMs);
     }
   }, durationMs);
@@ -210,7 +210,7 @@ export async function startTimer(
   clearInterval(session.updateInterval);
 
   const phrase = config.workStartPhrase.replace('{work}', String(config.workMinutes));
-  await playTts(phrase, config.speakerId, guildId, voiceChannelId).catch(() => {});
+  await playTts(phrase, config.speakerId, guildId, voiceChannelId).catch((e) => console.error('[TTS]', e));
 
   await schedulePhase(voiceChannelId, workMs);
 }
